@@ -17,6 +17,8 @@
 
 from TadCita import *
 from TadAgenda import *
+from TadCola import *
+from TadCitaCola import *
 import datetime
 #variables globales
 agen=crearAgenda()
@@ -232,9 +234,25 @@ def eliminar_citas_de_fecha():
         
 
 
-def cola():    
-   
-    print("MODIFICAR UNA CITA\n ")
+def colaActividadesFecha():
+
+    fecha = input("- Ingrese la fecha para la cual quiere armar la cola (DD/MM/AAA):  ")
+    fecha_a_buscar = datetime.datetime.strptime(fecha, "%d/%m/%Y")
+    cola = crearCola()
+    for i in range(tamanio(agen)):
+        cita = recuperarCita(agen, i-1)
+        if verFecha(cita).date() == fecha_a_buscar.date():
+            cita_cola = crearCitaCola()
+            cargarCitaCola(cita_cola, verActividad(cita), verPrioridad(cita))
+            encolar(cola, cita_cola)
+    
+    while not esVacia(cola):
+        aux = desencolar(cola)
+        print("="*21)
+        print(f'Actividad: {verActividadCitaCola(aux)}')
+        print(f'Prioridad: {verPrioridadCitaCola(aux)}')
+        print("="*21)
+    
           
 
 
@@ -246,7 +264,7 @@ menu = {
     "3": eliminar,
     "4": verCitas,
     "5": mover_citas_entre_fechas,
-    "6": cola,
+    "6": colaActividadesFecha,
     "7": eliminar_citas_de_fecha,
     }
 
@@ -266,7 +284,7 @@ while True:
     print("3 Eliminar Cita")       
     print("4 Ver Citas")
     print("5 Mover citas de un dia hacia otro")
-    print("6 cola")
+    print("6 Mostrar cola de actividades para una fecha especifica")
     print("7 Eliminar citas de una fecha")
     print("-" * 40)
     print("PARA TERMINAR PRESIONE s")    

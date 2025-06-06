@@ -29,5 +29,5 @@ def modAct(cita, nuevaAct):
     cita['actividad'] = nuevaAct
 def modFecha(cita, nuevaFecha):
     cita['fecha'] = nuevaFecha
-def modNivel(cita, nuevoNivel):
-    cita['prioridad'] = nuevoNivel
+def modNivel(cita, p):
+    cita['prioridad'] = p
